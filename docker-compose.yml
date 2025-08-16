@@ -1,0 +1,34 @@
+# Deployment files for Azure
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY}
+      - AZURE_MYSQL_HOST=${AZURE_MYSQL_HOST}
+      - AZURE_MYSQL_NAME=${AZURE_MYSQL_NAME}
+      - AZURE_MYSQL_USER=${AZURE_MYSQL_USER}
+      - AZURE_MYSQL_PASSWORD=${AZURE_MYSQL_PASSWORD}
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_files:/app/media
+    depends_on:
+      - redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=${API_URL}
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  media_files:
