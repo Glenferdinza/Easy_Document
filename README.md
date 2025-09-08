@@ -132,9 +132,9 @@ DB_PORT=3306
 
 ### Image Processing
 ```
-POST /api/image-tools/compress/        # Compress images
+POST /api/image-tools/compress/           # Compress images
 POST /api/image-tools/background-remove/  # Remove backgrounds
-POST /api/image-processing/enhance/    # Enhance images
+POST /api/image-processing/enhance/       # Enhance images
 ```
 
 ### Document Processing
@@ -209,7 +209,7 @@ DB_HOST=your-mysql-server
 python manage.py collectstatic
 
 # Build frontend for production
-cd frontend && npm run build
+cd frontend ; npm run build
 ```
 
 ## Performance Optimization
