@@ -71,8 +71,8 @@ A comprehensive document processing platform built with Django and React, featur
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/Glenferdinza/composser_compress-convert-file.git
-cd composser_compress-convert-file
+git clone https://github.com/Glenferdinza/Easy_Document
+cd compress_clean
 ```
 
 2. **Backend Setup**
