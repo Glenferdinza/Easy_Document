@@ -7,7 +7,7 @@
 
 A comprehensive document processing platform built with Django and React, featuring advanced file manipulation, conversion, and management tools with AI-powered features.
 
-## 🚀 Features
+## Features
 
 ### Core Document Tools
 - **Image Compression** - Reduce image file sizes up to 80% without quality loss
@@ -15,7 +15,7 @@ A comprehensive document processing platform built with Django and React, featur
 - **YouTube Converter** - Download and convert YouTube videos to MP3/MP4
 - **Word Processing** - Convert Word to PDF and merge multiple documents
 
-### Advanced Features ✨
+### Advanced Features
 - **Template Builder** - Create professional document templates with custom fields
 - **Batch File Organizer** - Automatically organize files by type, date, or custom rules
 - **Security Center** - Password protection, encryption, and document watermarking
@@ -244,8 +244,9 @@ This project is licensed under the MIT License. See LICENSE file for details.
 ## Author
 
 **Glen Ferdinand**
+- Gmail : asyadda05@gmail.com
 - GitHub: [@Glenferdinza](https://github.com/Glenferdinza)
-- Project Repository: [composser_compress-convert-file](https://github.com/Glenferdinza/composser_compress-convert-file)
+- Project Repository: [Easy_Document](https://github.com/Glenferdinza/Easy_Document)
 
 ## Acknowledgments
 
