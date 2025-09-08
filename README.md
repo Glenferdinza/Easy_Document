@@ -1,22 +1,33 @@
-# Compresso - Advanced File Processing Platform
+# Easy Document - Complete Document Processing Platform
 
-A comprehensive full-stack web application for file processing, conversion, and manipulation. Built with Django REST API backend and React frontend, featuring multiple document processing tools with a modern pink-themed interface.
+![Easy Document Banner](https://img.shields.io/badge/Easy_Document-Processing_Platform-ff6b9d?style=for-the-badge)
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## Features Overview
+A comprehensive document processing platform built with Django and React, featuring advanced file manipulation, conversion, and management tools with AI-powered features.
 
-### Core File Processing
-- **Image Compression & Enhancement**: Multi-level compression with AI-powered enhancement tools
-- **PDF Processing Suite**: Compress, merge, split, convert PDF documents
-- **YouTube Media Converter**: High-quality video and audio downloads
-- **Word Document Tools**: Convert Word to PDF and merge multiple documents
-- **Universal File Converter**: Support for multiple document format conversions
+## 🚀 Features
 
-### Advanced Tools
-- **Document Watermarking**: Add custom text watermarks with adjustable opacity and positioning
-- **QR Code Generator & Reader**: Create QR codes for text, URLs, contacts, and read existing codes
-- **Metadata Editor & Privacy Cleaner**: Edit file metadata and remove sensitive information
-- **Audio Document Processor**: Audio transcription, text-to-speech, and audio format conversion
-- **Background Removal**: AI-powered image background removal
+### Core Document Tools
+- **Image Compression** - Reduce image file sizes up to 80% without quality loss
+- **PDF Tools Suite** - Compress, merge, split, and convert PDF files
+- **YouTube Converter** - Download and convert YouTube videos to MP3/MP4
+- **Word Processing** - Convert Word to PDF and merge multiple documents
+
+### Advanced Features ✨
+- **Template Builder** - Create professional document templates with custom fields
+- **Batch File Organizer** - Automatically organize files by type, date, or custom rules
+- **Security Center** - Password protection, encryption, and document watermarking
+- **Document Parser** - AI-powered text and data extraction from various formats
+- **Visual Designer** - Create flyers, posters, and marketing materials
+- **File Comparison** - Compare documents and find differences between versions
+
+### Enhanced Image Tools
+- **Background Remover** - AI-powered background removal
+- **Image Enhancer** - Advanced filters for image quality improvement
+- **Format Conversion** - Support for multiple image formats
+- **QR Code Generator** - Create custom QR codes with various formats
 
 ### Technical Features
 - **Responsive Design**: Modern pink gradient theme optimized for all devices
