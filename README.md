@@ -161,7 +161,7 @@ POST /api/qr-tools/batch-generate/     # Batch QR generation
 ### Audio Processing
 ```
 POST /api/audio-tools/transcribe/      # Audio to text
-POST /api/audio-tools/text-to-speech/ # Text to speech
+POST /api/audio-tools/text-to-speech/  # Text to speech
 POST /api/audio-tools/convert/         # Audio format conversion
 ```
 
