@@ -8,19 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-secret-key-change-in-production')
-DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
-# Azure App Service automatically provides WEBSITE_HOSTNAME
-WEBSITE_HOSTNAME = os.getenv('WEBSITE_HOSTNAME')
-if WEBSITE_HOSTNAME:
-    ALLOWED_HOSTS = [WEBSITE_HOSTNAME]
-else:
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-
-# Azure-specific settings
-CSRF_TRUSTED_ORIGINS = []
-if WEBSITE_HOSTNAME:
-    CSRF_TRUSTED_ORIGINS = [f'https://{WEBSITE_HOSTNAME}']
+# CSRF settings for development
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -36,6 +31,19 @@ INSTALLED_APPS = [
     'youtube_converter',
     'pdf_tools',
     'image_tools',
+    'image_processing',
+    'word_tools',
+    'watermark_tools',
+    'universal_converter',
+    'metadata_tools',
+    'qr_tools',
+    'audio_tools',
+    'template_builder',
+    'batch_organizer',
+    'security_center',
+    'document_parser',
+    'visual_designer',
+    'file_comparison',
 ]
 
 MIDDLEWARE = [
@@ -72,30 +80,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'compress_website.wsgi.application'
 
 # Database
-if os.getenv('AZURE_MYSQL_HOST'):
-    # Production MySQL configuration
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('AZURE_MYSQL_NAME'),
-            'USER': os.getenv('AZURE_MYSQL_USER'),
-            'PASSWORD': os.getenv('AZURE_MYSQL_PASSWORD'),
-            'HOST': os.getenv('AZURE_MYSQL_HOST'),
-            'PORT': '3306',
-            'OPTIONS': {
-                'sql_mode': 'traditional',
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
-        }
+# Temporarily using SQLite for development
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Development SQLite configuration (default)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
+
+# Uncomment for MySQL in production:
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv('DB_NAME', 'compress_website'),
+#         'USER': os.getenv('DB_USER', 'root'),
+#         'PASSWORD': os.getenv('DB_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', 'localhost'),
+#         'PORT': os.getenv('DB_PORT', '3306'),
+#         'OPTIONS': {
+#             'sql_mode': 'traditional',
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         }
+#     }
+# }
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -119,22 +126,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
 ]
 
-# Add additional origins from environment variable
-cors_origins = os.getenv('CORS_ORIGINS', '')
-if cors_origins:
-    CORS_ALLOWED_ORIGINS.extend([origin.strip() for origin in cors_origins.split(',') if origin.strip()])
-
-# Azure-specific CORS settings
-if WEBSITE_HOSTNAME:
-    # Add Azure frontend URL to CORS
-    azure_frontend_url = os.getenv('FRONTEND_URL', f'https://{WEBSITE_HOSTNAME.replace("-api", "")}')
-    CORS_ALLOWED_ORIGINS.append(azure_frontend_url)
-
-# For development, allow all origins (less secure but easier for testing)
+# For development, allow all origins
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    # Production: be more restrictive
     CORS_ALLOW_ALL_ORIGINS = False
 
 # Internationalization
@@ -171,21 +166,16 @@ if not DEBUG:
 FILE_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50MB
 DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50MB
 
-# Celery settings (optional - only if Redis is available)
-if os.getenv('REDIS_URL'):
-    try:
-        import celery
-        CELERY_BROKER_URL = os.getenv('REDIS_URL')
-        CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')
-    except ImportError:
-        pass  # Celery not installed, skip configuration
-
-# Azure Storage settings (optional)
-if os.getenv('AZURE_STORAGE_CONNECTION_STRING'):
-    try:
-        from azure.storage.blob import BlobServiceClient
-        DEFAULT_FILE_STORAGE = 'azure_storage.AzureStorage'
-        AZURE_STORAGE_CONNECTION_STRING = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
-        AZURE_CONTAINER = 'media'
-    except ImportError:
-        pass  # Azure storage not available, use local storage
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+    },
+}

@@ -34,7 +34,7 @@ def check_ffmpeg_available():
     return False
 
 def download_youtube_video(url, format='mp4', quality='720p'):
-    """Download YouTube video and convert to specified format"""
+    """Download YouTube video and convert to specified format with robust error handling"""
     temp_dir = None
     try:
         # Create temporary directory
@@ -47,13 +47,16 @@ def download_youtube_video(url, format='mp4', quality='720p'):
             # If using local FFmpeg, also set ffprobe path
             ffprobe_path = ffmpeg_path.replace('ffmpeg.exe', 'ffprobe.exe')
         
-        # Simplified base options for yt-dlp to avoid format issues
+        # Base options for yt-dlp with improved compatibility
         base_opts = {
             'outtmpl': os.path.join(temp_dir, '%(title).50s.%(ext)s'),
             'restrictfilenames': True,
             'noplaylist': True,
-            'no_warnings': True,
-            'quiet': False,  # Enable logging for debugging
+            'no_warnings': False,
+            'quiet': False,
+            'extract_flat': False,
+            'writethumbnail': False,
+            'writeinfojson': False,
         }
         
         # Add FFmpeg path if available
@@ -61,10 +64,10 @@ def download_youtube_video(url, format='mp4', quality='720p'):
             base_opts['ffmpeg_location'] = ffmpeg_path
         
         if format == 'mp3':
-            # For MP3, use simple audio format selection
+            # For MP3, extract audio with quality options
             ydl_opts = {
                 **base_opts,
-                'format': 'bestaudio',  # Simple format selector
+                'format': 'bestaudio/best',
                 'postprocessors': [{
                     'key': 'FFmpegExtractAudio',
                     'preferredcodec': 'mp3',
@@ -72,14 +75,23 @@ def download_youtube_video(url, format='mp4', quality='720p'):
                 }] if check_ffmpeg_available() else [],
             }
         else:  # mp4
-            # Use the simplest format selection for maximum compatibility
+            # For MP4, use more flexible format selection
+            # Start with simple format and fallback to more complex ones
+            format_selectors = [
+                'best[ext=mp4]',
+                'best[height<=1080]',
+                'best',
+                'worst'
+            ]
+            
             ydl_opts = {
                 **base_opts,
-                'format': 'best',  # Let yt-dlp choose the best available format
+                'format': format_selectors[0],
+                'merge_output_format': 'mp4',
             }
         
-        # Download video with retry mechanism
-        max_attempts = 3
+        # Download video with retry mechanism and different strategies
+        max_attempts = 4
         last_error = None
         
         for attempt in range(max_attempts):
@@ -137,21 +149,25 @@ def download_youtube_video(url, format='mp4', quality='720p'):
                 if attempt < max_attempts - 1:
                     # Wait before retry
                     import time
-                    time.sleep(2 ** attempt)  # Exponential backoff
+                    time.sleep(1 + attempt)  # Progressive delay
                     
-                    # Try with different options on retry
-                    if attempt == 1:
-                        # Try with different format selector
-                        if format == 'mp4':
-                            ydl_opts['format'] = 'best[ext=mp4]/best'
-                        else:
+                    # Try with different format strategies on retry
+                    if format == 'mp4':
+                        if attempt == 1:
+                            ydl_opts['format'] = 'best[height<=720]'
+                        elif attempt == 2:
+                            ydl_opts['format'] = 'best'
+                        elif attempt == 3:
+                            ydl_opts['format'] = 'worst'
+                    else:  # mp3
+                        if attempt == 1:
+                            ydl_opts['format'] = 'bestaudio[ext=m4a]/bestaudio'
+                        elif attempt == 2:
                             ydl_opts['format'] = 'bestaudio'
-                    elif attempt == 2:
-                        # Last resort - try any format
-                        ydl_opts['format'] = 'best'
-                        # Remove some headers that might cause issues
-                        ydl_opts.pop('user_agent', None)
-                        ydl_opts.pop('referer', None)
+                        elif attempt == 3:
+                            ydl_opts['format'] = 'worst'
+                            # Remove postprocessors for last attempt
+                            ydl_opts['postprocessors'] = []
                 
         # If all attempts failed
         if last_error:

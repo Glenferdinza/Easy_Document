@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ImageIcon, PDFIcon, YouTubeIcon, MenuIcon, CloseIcon } from './Icons';
+import { ImageIcon, PDFIcon, YouTubeIcon, MenuIcon, CloseIcon, BackgroundRemoverIcon, ImageEnhancerIcon, WordIcon, MergeIcon } from './Icons';
 import { Home } from 'lucide-react';
 import Logo from './Logo';
 
@@ -30,6 +30,15 @@ const Navbar = () => {
       category: 'Image Tools', 
       items: [
         { name: 'Image to PDF', path: '/image-to-pdf', icon: PDFIcon },
+        { name: 'Background Remover', path: '/background-remover', icon: BackgroundRemoverIcon },
+        { name: 'Image Enhancer', path: '/image-enhancer', icon: ImageEnhancerIcon },
+      ]
+    },
+    {
+      category: 'Word Tools',
+      items: [
+        { name: 'Word to PDF', path: '/word-to-pdf', icon: WordIcon },
+        { name: 'Word Merge', path: '/word-merge', icon: MergeIcon },
       ]
     }
   ];

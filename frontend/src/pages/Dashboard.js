@@ -6,7 +6,22 @@ import {
   YouTubeIcon, 
   CompressIcon, 
   DownloadIcon,
-  SettingsIcon
+  SettingsIcon,
+  BackgroundRemoverIcon,
+  ImageEnhancerIcon,
+  WordIcon,
+  MergeIcon,
+  WatermarkIcon,
+  UniversalConverterIcon,
+  MetadataIcon,
+  QRCodeIcon,
+  AudioToolsIcon,
+  TemplateBuilderIcon,
+  BatchOrganizerIcon,
+  SecurityIcon,
+  DocumentParserIcon,
+  VisualDesignerIcon,
+  FileComparisonIcon
 } from '../components/Icons';
 import { FileImage, Scissors, Download, Upload, Shield, Zap } from 'lucide-react';
 
@@ -107,6 +122,76 @@ const Dashboard = () => {
       description: 'Combine multiple PDF files into one',
       path: '/merge-pdf',
       color: '#FFDCDC'
+    },
+    {
+      icon: BackgroundRemoverIcon,
+      title: 'Background Remover',
+      description: 'Remove backgrounds from images with AI',
+      path: '/background-remover',
+      color: '#ff6b9d'
+    },
+    {
+      icon: ImageEnhancerIcon,
+      title: 'Image Enhancer',
+      description: 'Enhance image quality with advanced filters',
+      path: '/image-enhancer',
+      color: '#ff8fa3'
+    },
+    {
+      icon: WordIcon,
+      title: 'Word to PDF',
+      description: 'Convert Word documents to PDF format',
+      path: '/word-to-pdf',
+      color: '#ff6b9d'
+    },
+    {
+      icon: MergeIcon,
+      title: 'Word Merge',
+      description: 'Merge multiple Word documents with format choice',
+      path: '/word-merge',
+      color: '#ff8fa3'
+    },
+    {
+      icon: TemplateBuilderIcon,
+      title: 'Template Builder',
+      description: 'Create professional document templates with custom fields',
+      path: '/template-builder',
+      color: '#ff6b9d'
+    },
+    {
+      icon: BatchOrganizerIcon,
+      title: 'Batch Organizer',
+      description: 'Organize files automatically by type, date, or custom rules',
+      path: '/batch-organizer',
+      color: '#ff8fa3'
+    },
+    {
+      icon: SecurityIcon,
+      title: 'Security Center',
+      description: 'Password protect, encrypt, and watermark your documents',
+      path: '/security-center',
+      color: '#ffb3d6'
+    },
+    {
+      icon: DocumentParserIcon,
+      title: 'Document Parser',
+      description: 'Extract text and data from various document formats',
+      path: '/document-parser',
+      color: '#ffe5f1'
+    },
+    {
+      icon: VisualDesignerIcon,
+      title: 'Visual Designer',
+      description: 'Create stunning flyers, posters, and marketing materials',
+      path: '/visual-designer',
+      color: '#ff6b9d'
+    },
+    {
+      icon: FileComparisonIcon,
+      title: 'File Comparison',
+      description: 'Compare documents and find differences between files',
+      path: '/file-comparison',
+      color: '#ff8fa3'
     }
   ];
 

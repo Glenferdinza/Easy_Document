@@ -31,12 +31,15 @@ staticfiles/
 venv/
 env/
 ENV/
+.venv/
 
 # Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
 
 # React Build
 /frontend/build
@@ -47,9 +50,11 @@ yarn-error.log*
 
 # Environment Variables
 .env
-.env.local
 .env.production
+.env.local
 .env.test
+frontend/.env.local
+frontend/.env.production
 
 # IDEs
 .vscode/
@@ -61,6 +66,7 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+*.bak
 
 # Logs
 *.log
@@ -70,17 +76,32 @@ logs/
 tmp/
 temp/
 *.tmp
+**/temp/
+**/tmp/
 
 # Database
 *.sqlite3
+*.db
 
 # FFmpeg binaries and dependencies (large files excluded from Git)
 backend/ffmpeg/
 backend/ffmpeg_local_backup/
+backend/poppler/
 backend/ffmpeg.exe
 backend/ffmpeg.zip
 *.exe
 *.dll
+
+# Deployment files (keep for examples)
+# *.ps1
+# *.sh
+# *.bat
+
+# Test files
+test_*.py
+*_test.py
+reset_*.py
+manual_*.py
 
 # Coverage reports
 htmlcov/
@@ -90,3 +111,49 @@ coverage.xml
 
 # Docker
 *.pid
+docker-compose.override.yml
+
+# Generated files
+*.pyc
+*.pyo
+*.pyd
+.cache/
+
+# Word processing temporary files
+backend/word_tools/temp/
+*.temp.*
+
+# Image processing temporary files
+backend/image_processing/temp/
+*.processed.*
+
+# User uploaded files (during development)
+uploads/
+downloads/
+
+# Runtime files
+*.sock
+*.pid
+
+# New app temporary files
+backend/template_builder/temp/
+backend/batch_organizer/temp/
+backend/security_center/temp/
+backend/document_parser/temp/
+backend/visual_designer/temp/
+backend/file_comparison/temp/
+
+# Processing temporary files
+backend/generated_documents/
+backend/protected_documents/
+backend/encrypted_documents/
+backend/comparison_reports/
+backend/parsed_documents/
+backend/design_previews/
+backend/final_designs/
+
+# Additional formats for new features
+*.docx.tmp
+*.pdf.tmp
+*.encrypted
+*.protected

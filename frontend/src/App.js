@@ -19,6 +19,10 @@ import MergePDF from './pages/MergePDF';
 import PDFToImage from './pages/PDFToImage';
 import SplitPDF from './pages/SplitPDF';
 import ImageToPDF from './pages/ImageToPDF';
+import BackgroundRemover from './pages/BackgroundRemover';
+import ImageEnhancer from './pages/ImageEnhancer';
+import WordToPdf from './pages/WordToPdf';
+import WordMerge from './pages/WordMerge';
 
 function App() {
   useEffect(() => {
@@ -45,6 +49,10 @@ function App() {
             <Route path="/pdf-to-image" element={<PDFToImage />} />
             <Route path="/split-pdf" element={<SplitPDF />} />
             <Route path="/image-to-pdf" element={<ImageToPDF />} />
+            <Route path="/background-remover" element={<BackgroundRemover />} />
+            <Route path="/image-enhancer" element={<ImageEnhancer />} />
+            <Route path="/word-to-pdf" element={<WordToPdf />} />
+            <Route path="/word-merge" element={<WordMerge />} />
             <Route path="*" element={<div style={{padding: '2rem', textAlign: 'center'}}>Page not found</div>} />
           </Routes>
         </main>

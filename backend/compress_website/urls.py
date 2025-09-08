@@ -9,6 +9,8 @@ urlpatterns = [
     path('api/youtube/', include('youtube_converter.urls')),
     path('api/pdf-tools/', include('pdf_tools.urls')),
     path('api/image-tools/', include('image_tools.urls')),
+    path('api/image-processing/', include('image_processing.urls')),
+    path('api/word-tools/', include('word_tools.urls')),
     path('api/stats/', include('compression.api_urls')),  # Untuk statistik
 ]
 
