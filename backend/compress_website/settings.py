@@ -34,13 +34,8 @@ INSTALLED_APPS = [
     'image_processing',
     'word_tools',
     'watermark_tools',
-    'metadata_tools',
     'qr_tools',
-    'audio_tools',
-    'batch_organizer',
     'security_center',
-    'document_parser',
-    'file_comparison',
 ]
 
 MIDDLEWARE = [
