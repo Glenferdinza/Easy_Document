@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 import { Upload, Download, Settings, Image as ImageIcon, Trash2 } from 'lucide-react';
-import { compressImage, formatFileSize, downloadFile } from '../utils/api';
+import { compressImage, formatFileSize } from '../utils/api';
 
 const ImageCompress = () => {
   const [files, setFiles] = useState([]);

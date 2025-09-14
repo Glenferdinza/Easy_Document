@@ -135,25 +135,34 @@ downloads/
 *.sock
 *.pid
 
-# New app temporary files
-backend/template_builder/temp/
-backend/batch_organizer/temp/
-backend/security_center/temp/
-backend/document_parser/temp/
-backend/visual_designer/temp/
-backend/file_comparison/temp/
+# Additional exclusions
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Processing temporary files
-backend/generated_documents/
-backend/protected_documents/
-backend/encrypted_documents/
-backend/comparison_reports/
-backend/parsed_documents/
-backend/design_previews/
-backend/final_designs/
+# Security and sensitive files
+*.key
+*.pem
+*.crt
+secret_key.txt
 
-# Additional formats for new features
-*.docx.tmp
-*.pdf.tmp
-*.encrypted
-*.protected
+# Additional temporary files
+*.backup
+*.orig
+nohup.out
+
+# Additional frontend files
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+/frontend/.pnp
+/frontend/.pnp.js
+
+# System files
+desktop.ini
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+

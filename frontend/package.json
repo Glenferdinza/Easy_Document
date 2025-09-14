@@ -1,7 +1,29 @@
 {
-  "name": "compress-website-frontend",
-  "version": "1.0.0",
-  "private": true,
+  "name": "easy-document-frontend",
+  "version": "2.1.0",
+  "description": "Easy Document - Modern full-stack document processing platform with React frontend. Features PDF/Word/Image compression, conversion, QR tools, watermarking, YouTube conversion, and security features.",
+  "author": "Glen Ferdinand <glenferdinza@github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Glenferdinza/Easy_Document.git"
+  },
+  "keywords": [
+    "document-processing",
+    "pdf-compression",
+    "image-processing",
+    "file-conversion",
+    "react",
+    "django",
+    "document-tools",
+    "word-to-pdf",
+    "qr-generator",
+    "watermark",
+    "youtube-converter",
+    "security-center",
+    "full-stack"
+  ],
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

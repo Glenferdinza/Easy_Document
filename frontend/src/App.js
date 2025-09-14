@@ -23,6 +23,11 @@ import BackgroundRemover from './pages/BackgroundRemover';
 import ImageEnhancer from './pages/ImageEnhancer';
 import WordToPdf from './pages/WordToPdf';
 import WordMerge from './pages/WordMerge';
+import SecurityCenter from './pages/SecurityCenter';
+import QRGenerator from './pages/QRGenerator';
+import WatermarkTools from './pages/WatermarkTools';
+
+
 
 function App() {
   useEffect(() => {
@@ -53,6 +58,10 @@ function App() {
             <Route path="/image-enhancer" element={<ImageEnhancer />} />
             <Route path="/word-to-pdf" element={<WordToPdf />} />
             <Route path="/word-merge" element={<WordMerge />} />
+            <Route path="/security-center" element={<SecurityCenter />} />
+            <Route path="/qr-generator" element={<QRGenerator />} />
+            <Route path="/watermark-tools" element={<WatermarkTools />} />
+            
             <Route path="*" element={<div style={{padding: '2rem', textAlign: 'center'}}>Page not found</div>} />
           </Routes>
         </main>

@@ -11,6 +11,9 @@ urlpatterns = [
     path('api/image-tools/', include('image_tools.urls')),
     path('api/image-processing/', include('image_processing.urls')),
     path('api/word-tools/', include('word_tools.urls')),
+    path('api/security/', include('security_center.urls')),
+    path('api/watermark/', include('watermark_tools.urls')),
+    path('api/qr-tools/', include('qr_tools.urls')),
     path('api/stats/', include('compression.api_urls')),  # Untuk statistik
 ]
 

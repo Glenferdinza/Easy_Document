@@ -3,6 +3,7 @@ import tempfile
 from docx import Document
 from docx2pdf import convert
 import logging
+import pythoncom
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +11,9 @@ logger = logging.getLogger(__name__)
 def convert_word_to_pdf(input_path, original_filename):
     """Convert Word document to PDF"""
     try:
+        # Initialize COM
+        pythoncom.CoInitialize()
+        
         # Create output filename
         base_name = os.path.splitext(original_filename)[0]
         output_filename = f"{base_name}.pdf"
@@ -29,6 +33,9 @@ def convert_word_to_pdf(input_path, original_filename):
     except Exception as e:
         logger.error(f"Word to PDF conversion error: {str(e)}")
         raise Exception(f"Failed to convert Word to PDF: {str(e)}")
+    finally:
+        # Cleanup COM
+        pythoncom.CoUninitialize()
 
 
 def merge_word_documents(input_paths, output_format='docx'):
@@ -67,13 +74,18 @@ def merge_word_documents(input_paths, output_format='docx'):
             output_path = os.path.join(output_dir, output_filename)
             merged_doc.save(output_path)
         else:  # PDF
-            # Save as DOCX first, then convert to PDF
-            temp_docx_path = os.path.join(output_dir, "temp_merged.docx")
-            merged_doc.save(temp_docx_path)
-            
-            output_filename = "merged_document.pdf"
-            output_path = os.path.join(output_dir, output_filename)
-            convert(temp_docx_path, output_path)
+            # Initialize COM for PDF conversion
+            pythoncom.CoInitialize()
+            try:
+                # Save as DOCX first, then convert to PDF
+                temp_docx_path = os.path.join(output_dir, "temp_merged.docx")
+                merged_doc.save(temp_docx_path)
+                
+                output_filename = "merged_document.pdf"
+                output_path = os.path.join(output_dir, output_filename)
+                convert(temp_docx_path, output_path)
+            finally:
+                pythoncom.CoUninitialize()
             
             # Clean up temporary DOCX
             if os.path.exists(temp_docx_path):

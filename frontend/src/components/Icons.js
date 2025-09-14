@@ -595,7 +595,9 @@ export const SignatureIcon = ({ size = 24, color = '#ff8fa3' }) => (
 
 // New 6 Feature Icons
 
-export const TemplateBuilderIcon = ({ size = 24, color = '#ff6b9d' }) => (
+
+
+export const FolderIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -603,16 +605,11 @@ export const TemplateBuilderIcon = ({ size = 24, color = '#ff6b9d' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="3" y="3" width="18" height="18" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-    <rect x="7" y="7" width="10" height="3" rx="1" fill={color} opacity="0.3"/>
-    <rect x="7" y="12" width="6" height="2" rx="1" fill={color} opacity="0.5"/>
-    <rect x="7" y="16" width="8" height="2" rx="1" fill={color} opacity="0.5"/>
-    <circle cx="17" cy="13" r="1.5" fill={color}/>
-    <path d="M19 7L21 5M21 5L19 3M21 5H17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" stroke={color} strokeWidth="2" fill="none"/>
   </svg>
 );
 
-export const BatchOrganizerIcon = ({ size = 24, color = '#ff8fa3' }) => (
+export const ChartIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -620,17 +617,13 @@ export const BatchOrganizerIcon = ({ size = 24, color = '#ff8fa3' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="2" y="4" width="6" height="6" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
-    <rect x="2" y="14" width="6" height="6" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
-    <rect x="16" y="4" width="6" height="6" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
-    <rect x="16" y="14" width="6" height="6" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
-    <path d="M10 7H14M10 17H14" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-    <path d="M12 5V9M12 15V19" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="12" cy="12" r="2" fill={color}/>
+    <path d="M3 3v18h18" stroke={color} strokeWidth="2"/>
+    <path d="M18.7 8l-4.2 4.2-3-3-3.5 3.5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15 8h3.7v3.7" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-export const SecurityCenterIcon = ({ size = 24, color = '#ff6b9d' }) => (
+export const FileDocumentIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -638,15 +631,16 @@ export const SecurityCenterIcon = ({ size = 24, color = '#ff6b9d' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M12 2L3 7L12 22L21 7L12 2Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-    <rect x="9" y="10" width="6" height="6" rx="1" stroke={color} strokeWidth="1.5" fill="none"/>
-    <circle cx="12" cy="13" r="1.5" fill={color}/>
-    <path d="M12 14.5V15.5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M16 10V8a4 4 0 0 0-8 0v2" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke={color} strokeWidth="2" fill="none"/>
+    <polyline points="14,2 14,8 20,8" stroke={color} strokeWidth="2"/>
+    <line x1="16" y1="13" x2="8" y2="13" stroke={color} strokeWidth="2"/>
+    <line x1="16" y1="17" x2="8" y2="17" stroke={color} strokeWidth="2"/>
+    <polyline points="10,9 9,9 8,9" stroke={color} strokeWidth="2"/>
   </svg>
 );
 
-export const DocumentParserIcon = ({ size = 24, color = '#ff8fa3' }) => (
+// Additional icons to replace emojis
+export const TargetIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -654,15 +648,13 @@ export const DocumentParserIcon = ({ size = 24, color = '#ff8fa3' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="4" y="2" width="16" height="20" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-    <path d="M8 6h8M8 10h6M8 14h4" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="16" cy="16" r="3" fill="none" stroke={color} strokeWidth="1.5"/>
-    <path d="M18.5 18.5L21 21" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M14 18l1 1 2-2" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none"/>
+    <circle cx="12" cy="12" r="6" stroke={color} strokeWidth="2" fill="none"/>
+    <circle cx="12" cy="12" r="2" stroke={color} strokeWidth="2" fill="none"/>
   </svg>
 );
 
-export const VisualDesignerIcon = ({ size = 24, color = '#ff6b9d' }) => (
+export const SparklesIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -670,16 +662,13 @@ export const VisualDesignerIcon = ({ size = 24, color = '#ff6b9d' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="2" y="3" width="20" height="14" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-    <circle cx="8" cy="8" r="2" fill={color} opacity="0.5"/>
-    <rect x="13" y="6" width="6" height="4" rx="1" fill={color} opacity="0.3"/>
-    <path d="M6 13l4-2 4 3 6-4" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="20" cy="20" r="3" fill={color}/>
-    <path d="M18 18l4 4" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" fill={color}/>
+    <path d="M19 3l.5 1.5L21 5l-1.5.5L19 7l-.5-1.5L17 5l1.5-.5L19 3z" fill={color}/>
+    <path d="M19 17l.5 1.5L21 19l-1.5.5L19 21l-.5-1.5L17 19l1.5-.5L19 17z" fill={color}/>
   </svg>
 );
 
-export const FileComparisonIcon = ({ size = 24, color = '#ff8fa3' }) => (
+export const LightningIcon = ({ size = 24, color = '#FF6B6B' }) => (
   <svg 
     width={size} 
     height={size} 
@@ -687,12 +676,89 @@ export const FileComparisonIcon = ({ size = 24, color = '#ff8fa3' }) => (
     fill="none" 
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect x="2" y="3" width="8" height="18" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-    <rect x="14" y="3" width="8" height="18" rx="2" stroke={color} strokeWidth="2" fill="none"/>
-    <path d="M5 7h2M5 11h3M5 15h2" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M17 7h2M17 11h3M17 15h2" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M10 12h4" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-    <path d="M12 10v4" stroke={color} strokeWidth="2" strokeLinecap="round"/>
-    <circle cx="12" cy="12" r="1" fill={color}/>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10" fill={color}/>
+  </svg>
+);
+
+export const WindIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M9 6a3 3 0 1 1 6 0c0 1-3 1-3 1s-3 0-3-1z" stroke={color} strokeWidth="2" fill="none"/>
+    <path d="M3 12h16" stroke={color} strokeWidth="2"/>
+    <path d="M12 18a3 3 0 1 0-6 0c0-1 3-1 3-1s3 0 3 1z" stroke={color} strokeWidth="2" fill="none"/>
+  </svg>
+);
+
+export const NumberIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M3 6l3 1 4-1-4 6 4 1-3 4-4-1" stroke={color} strokeWidth="2" fill="none"/>
+    <path d="M19 8v8" stroke={color} strokeWidth="2"/>
+    <path d="M21 6l-2 2 2 2" stroke={color} strokeWidth="2"/>
+    <path d="M15 14l2 2-2 2" stroke={color} strokeWidth="2"/>
+  </svg>
+);
+
+export const CheckCircleIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none"/>
+    <polyline points="9,12 12,15 16,10" stroke={color} strokeWidth="2"/>
+  </svg>
+);
+
+export const DeviceIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke={color} strokeWidth="2" fill="none"/>
+    <line x1="8" y1="21" x2="16" y2="21" stroke={color} strokeWidth="2"/>
+    <line x1="12" y1="17" x2="12" y2="21" stroke={color} strokeWidth="2"/>
+  </svg>
+);
+
+export const StackIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" stroke={color} strokeWidth="2" fill="none"/>
+    <path d="M8 3l4 4 4-4" stroke={color} strokeWidth="2"/>
+    <line x1="9" y1="12" x2="15" y2="12" stroke={color} strokeWidth="2"/>
+    <line x1="9" y1="16" x2="15" y2="16" stroke={color} strokeWidth="2"/>
+  </svg>
+);
+
+export const EditIcon = ({ size = 24, color = '#FF6B6B' }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" stroke={color} strokeWidth="2" fill="none"/>
   </svg>
 );

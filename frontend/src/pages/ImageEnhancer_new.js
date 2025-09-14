@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
-import { Download, Settings, Sliders, Image as ImageIcon, Focus, Zap, Maximize, Palette, Sun, Contrast } from 'lucide-react';
+import { Download, Settings, Sliders, Image as ImageIcon } from 'lucide-react';
 import { ImageEnhancerIcon, LightBulbIcon } from '../components/Icons';
 
 const ImageEnhancer = () => {
@@ -113,12 +113,12 @@ const ImageEnhancer = () => {
                     </h3>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                         {[
-                            { value: 'sharpen', label: 'Sharpen', desc: 'Make your image crisp and detailed', icon: Focus },
-                            { value: 'denoise', label: 'Noise Reduction', desc: 'Remove unwanted noise and grain', icon: Zap },
-                            { value: 'upscale', label: 'Upscale', desc: 'Increase image resolution', icon: Maximize },
-                            { value: 'color_enhance', label: 'Color Enhancement', desc: 'Boost colors and vibrancy', icon: Palette },
-                            { value: 'brightness', label: 'Brightness', desc: 'Adjust image brightness', icon: Sun },
-                            { value: 'contrast', label: 'Contrast', desc: 'Enhance image contrast', icon: Contrast }
+                            { value: 'sharpen', label: 'Sharpen', desc: 'Make your image crisp and detailed' },
+                            { value: 'denoise', label: 'Noise Reduction', desc: 'Remove unwanted noise and grain' },
+                            { value: 'upscale', label: 'Upscale', desc: 'Increase image resolution' },
+                            { value: 'color_enhance', label: 'Color Enhancement', desc: 'Boost colors and vibrancy' },
+                            { value: 'brightness', label: 'Brightness', desc: 'Adjust image brightness' },
+                            { value: 'contrast', label: 'Contrast', desc: 'Enhance image contrast' }
                         ].map((type) => (
                             <div
                                 key={type.value}
@@ -129,15 +129,9 @@ const ImageEnhancer = () => {
                                     borderRadius: '8px',
                                     cursor: 'pointer',
                                     transition: 'all 0.3s ease',
-                                    background: enhancementType === type.value ? 'rgba(255, 107, 107, 0.05)' : 'white',
-                                    textAlign: 'center'
+                                    background: enhancementType === type.value ? 'rgba(255, 107, 107, 0.05)' : 'white'
                                 }}
                             >
-                                <type.icon 
-                                    size={24} 
-                                    color={enhancementType === type.value ? '#FF6B6B' : '#666'} 
-                                    style={{ marginBottom: '0.5rem' }}
-                                />
                                 <div style={{ fontWeight: '600', color: '#333', marginBottom: '0.5rem' }}>{type.label}</div>
                                 <div style={{ fontSize: '0.85rem', color: '#666' }}>{type.desc}</div>
                             </div>
@@ -251,7 +245,7 @@ const ImageEnhancer = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Zap size={20} />
+                                    <Sparkles size={20} />
                                     Enhance Image
                                 </>
                             )}

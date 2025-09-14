@@ -34,15 +34,12 @@ INSTALLED_APPS = [
     'image_processing',
     'word_tools',
     'watermark_tools',
-    'universal_converter',
     'metadata_tools',
     'qr_tools',
     'audio_tools',
-    'template_builder',
     'batch_organizer',
     'security_center',
     'document_parser',
-    'visual_designer',
     'file_comparison',
 ]
 

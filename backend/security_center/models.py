@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cryptography.fernet import Fernet
-import bcrypt
+from django.contrib.auth.hashers import make_password, check_password as django_check_password
 
 
 class PasswordProtectedDocument(models.Model):
@@ -26,12 +26,11 @@ class PasswordProtectedDocument(models.Model):
     
     def set_password(self, password):
         """Hash and set password for the document."""
-        salt = bcrypt.gensalt()
-        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
+        self.password_hash = make_password(password)
     
     def check_password(self, password):
         """Check if provided password matches."""
-        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+        return django_check_password(password, self.password_hash)
     
     class Meta:
         ordering = ['-created_at']

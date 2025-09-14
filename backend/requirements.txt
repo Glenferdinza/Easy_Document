@@ -1,0 +1,14 @@
+Django==5.2.5
+djangorestframework
+django-cors-headers
+whitenoise
+python-dotenv
+Pillow
+qrcode[pil]
+pyzbar
+PyPDF2
+python-docx
+opencv-python
+pytesseract
+yt-dlp
+ffmpeg-python

@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
-import { Upload, Download, Image, Settings, Trash2 } from 'lucide-react';
+import { Download, Image, Trash2, Settings } from 'lucide-react';
 import { PDFIcon, LightBulbIcon } from '../components/Icons';
 import { pdfToImages, downloadFile } from '../utils/api';
 

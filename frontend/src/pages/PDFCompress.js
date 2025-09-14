@@ -3,7 +3,8 @@ import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 import { Upload, Download, Settings, FileText, Trash2 } from 'lucide-react';
 import { compressPDF, formatFileSize } from '../utils/api';
-import { LightBulbIcon, DocumentIcon, ImageIcon, SecurityIcon } from '../components/Icons';
+import { LightBulbIcon, DocumentIcon, ImageIcon } from '../components/Icons';
+import { Shield } from 'lucide-react';
 
 const PDFCompress = () => {
   const [files, setFiles] = useState([]);
@@ -487,7 +488,7 @@ const PDFCompress = () => {
               <span><strong>Medium compression</strong> offers the best balance for most documents</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <SecurityIcon size={16} color="#FF6B6B" />
+              <Shield size={16} color="#FF6B6B" />
               <span>Your files are processed securely and deleted after compression</span>
             </li>
           </ul>

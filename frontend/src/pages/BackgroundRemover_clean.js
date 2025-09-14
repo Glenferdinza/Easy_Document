@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';  
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
-import { Download, Settings, Sliders, Image as ImageIcon, Focus, Zap, Maximize, Palette, Sun, Contrast } from 'lucide-react';
-import { ImageEnhancerIcon, LightBulbIcon } from '../components/Icons';
+import { Download, Settings, Sparkles } from 'lucide-react';
+import { BackgroundRemoverIcon, LightBulbIcon } from '../components/Icons';
 
-const ImageEnhancer = () => {
+const BackgroundRemover = () => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [result, setResult] = useState(null);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [enhancementType, setEnhancementType] = useState('sharpen');
+    const [method, setMethod] = useState('auto');
 
     const onDrop = useCallback((acceptedFiles) => {
         const imageFiles = acceptedFiles.filter(file => file.type.startsWith('image/'));
@@ -34,7 +34,7 @@ const ImageEnhancer = () => {
         maxFiles: 1
     });
 
-    const enhanceImage = async () => {
+    const removeBackground = async () => {
         if (!file) {
             toast.error('Please select an image first');
             return;
@@ -43,10 +43,10 @@ const ImageEnhancer = () => {
         setIsProcessing(true);
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('enhancement_type', enhancementType);
+        formData.append('method', method);
 
         try {
-            const response = await fetch('/api/image-processing/enhance/', {
+            const response = await fetch('/api/image-processing/remove-background/', {
                 method: 'POST',
                 body: formData,
             });
@@ -55,7 +55,7 @@ const ImageEnhancer = () => {
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 setResult(url);
-                toast.success('Image enhanced successfully!');
+                toast.success('Background removed successfully!');
             } else {
                 const error = await response.json();
                 toast.error(`Error: ${error.error}`);
@@ -71,7 +71,7 @@ const ImageEnhancer = () => {
         if (result) {
             const link = document.createElement('a');
             link.href = result;
-            link.download = `${file.name.split('.')[0]}_enhanced.jpg`;
+            link.download = `${file.name.split('.')[0]}_no_bg.png`;
             link.click();
         }
     };
@@ -94,7 +94,7 @@ const ImageEnhancer = () => {
                         color: '#333',
                         marginBottom: '1rem'
                     }}>
-                        Image Enhancer
+                        Background Remover
                     </h1>
                     <p style={{
                         fontSize: '1.1rem',
@@ -102,51 +102,12 @@ const ImageEnhancer = () => {
                         maxWidth: '600px',
                         margin: '0 auto'
                     }}>
-                        Enhance your images with professional-grade AI algorithms and advanced filters
+                        Remove backgrounds from your images automatically using AI-powered technology
                     </p>
                 </div>
 
-                {/* Enhancement Type Selection */}
-                <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="100">
-                    <h3 style={{ fontSize: '1.2rem', fontWeight: '600', color: '#333', marginBottom: '1rem' }}>
-                        Choose Enhancement Type
-                    </h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                        {[
-                            { value: 'sharpen', label: 'Sharpen', desc: 'Make your image crisp and detailed', icon: Focus },
-                            { value: 'denoise', label: 'Noise Reduction', desc: 'Remove unwanted noise and grain', icon: Zap },
-                            { value: 'upscale', label: 'Upscale', desc: 'Increase image resolution', icon: Maximize },
-                            { value: 'color_enhance', label: 'Color Enhancement', desc: 'Boost colors and vibrancy', icon: Palette },
-                            { value: 'brightness', label: 'Brightness', desc: 'Adjust image brightness', icon: Sun },
-                            { value: 'contrast', label: 'Contrast', desc: 'Enhance image contrast', icon: Contrast }
-                        ].map((type) => (
-                            <div
-                                key={type.value}
-                                onClick={() => setEnhancementType(type.value)}
-                                style={{
-                                    padding: '1rem',
-                                    border: enhancementType === type.value ? '2px solid #FF6B6B' : '1px solid #ddd',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s ease',
-                                    background: enhancementType === type.value ? 'rgba(255, 107, 107, 0.05)' : 'white',
-                                    textAlign: 'center'
-                                }}
-                            >
-                                <type.icon 
-                                    size={24} 
-                                    color={enhancementType === type.value ? '#FF6B6B' : '#666'} 
-                                    style={{ marginBottom: '0.5rem' }}
-                                />
-                                <div style={{ fontWeight: '600', color: '#333', marginBottom: '0.5rem' }}>{type.label}</div>
-                                <div style={{ fontSize: '0.85rem', color: '#666' }}>{type.desc}</div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
                 {/* Upload Area */}
-                <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="200">
+                <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="100">
                     <div {...getRootProps()} style={{
                         border: `2px dashed ${isDragActive ? '#FF6B6B' : '#ddd'}`,
                         borderRadius: '12px',
@@ -157,7 +118,7 @@ const ImageEnhancer = () => {
                         background: isDragActive ? 'rgba(255, 107, 107, 0.05)' : 'transparent'
                     }}>
                         <input {...getInputProps()} />
-                        <ImageEnhancerIcon size={48} color={isDragActive ? '#FF6B6B' : '#999'} />
+                        <BackgroundRemoverIcon size={48} color={isDragActive ? '#FF6B6B' : '#999'} />
                         <p style={{
                             fontSize: '1.1rem',
                             margin: '1rem 0 0.5rem',
@@ -171,9 +132,9 @@ const ImageEnhancer = () => {
                     </div>
                 </div>
 
-                {/* Selected File */}
+                {/* Selected File & Settings */}
                 {file && (
-                    <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="300">
+                    <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="200">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
                             <h3 style={{ fontSize: '1.2rem', fontWeight: '600', color: '#333' }}>
                                 Selected Image
@@ -224,8 +185,30 @@ const ImageEnhancer = () => {
                             </div>
                         </div>
 
+                        <div style={{ marginBottom: '1.5rem' }}>
+                            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#333' }}>
+                                <Settings size={16} style={{ display: 'inline', marginRight: '0.5rem' }} />
+                                Removal Method:
+                            </label>
+                            <select
+                                value={method}
+                                onChange={(e) => setMethod(e.target.value)}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.75rem',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '6px',
+                                    fontSize: '1rem'
+                                }}
+                            >
+                                <option value="auto">Automatic (Recommended)</option>
+                                <option value="grabcut">GrabCut Algorithm</option>
+                                <option value="threshold">Threshold-based</option>
+                            </select>
+                        </div>
+
                         <button
-                            onClick={enhanceImage}
+                            onClick={removeBackground}
                             disabled={isProcessing}
                             style={{
                                 width: '100%',
@@ -247,12 +230,12 @@ const ImageEnhancer = () => {
                             {isProcessing ? (
                                 <>
                                     <div className="loading" style={{ marginRight: '0.5rem' }} />
-                                    Enhancing Image...
+                                    Removing Background...
                                 </>
                             ) : (
                                 <>
-                                    <Zap size={20} />
-                                    Enhance Image
+                                    <Sparkles size={20} />
+                                    Remove Background
                                 </>
                             )}
                         </button>
@@ -261,9 +244,9 @@ const ImageEnhancer = () => {
 
                 {/* Result */}
                 {result && (
-                    <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="400">
+                    <div className="card" style={{ marginBottom: '2rem' }} data-aos="fade-up" data-aos-delay="300">
                         <h3 style={{ fontSize: '1.2rem', fontWeight: '600', color: '#333', marginBottom: '1.5rem' }}>
-                            Enhanced Result
+                            Result
                         </h3>
                         
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
@@ -272,7 +255,7 @@ const ImageEnhancer = () => {
                                 <img src={preview} alt="Original" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
                             </div>
                             <div>
-                                <h4 style={{ fontSize: '1rem', fontWeight: '500', color: '#666', marginBottom: '0.5rem' }}>Enhanced</h4>
+                                <h4 style={{ fontSize: '1rem', fontWeight: '500', color: '#666', marginBottom: '0.5rem' }}>Background Removed</h4>
                                 <img src={result} alt="Result" style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '8px', border: '1px solid #eee' }} />
                             </div>
                         </div>
@@ -297,13 +280,13 @@ const ImageEnhancer = () => {
                             }}
                         >
                             <Download size={20} />
-                            Download Enhanced Image
+                            Download Result
                         </button>
                     </div>
                 )}
 
                 {/* Tips Section */}
-                <div className="card" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }} data-aos="fade-up" data-aos-delay={result ? "500" : "400"}>
+                <div className="card" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)' }} data-aos="fade-up" data-aos-delay={result ? "400" : "300"}>
                     <h3 style={{
                         fontSize: '1.2rem',
                         fontWeight: '600',
@@ -314,7 +297,7 @@ const ImageEnhancer = () => {
                         gap: '0.5rem'
                     }}>
                         <LightBulbIcon size={20} color="#FF6B6B" />
-                        Image Enhancement Tips
+                        Background Removal Tips
                     </h3>
                     <ul style={{
                         listStyle: 'none',
@@ -322,16 +305,16 @@ const ImageEnhancer = () => {
                         lineHeight: '1.6'
                     }}>
                         <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <ImageIcon size={16} color="#FF6B6B" />
-                            <span>Choose the right enhancement type based on your image's needs</span>
+                            <BackgroundRemoverIcon size={16} color="#FF6B6B" />
+                            <span>Works best with clear contrast between subject and background</span>
                         </li>
                         <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <Settings size={16} color="#FF6B6B" />
-                            <span>Higher quality originals produce better enhancement results</span>
+                            <span>Try different methods if automatic doesn't work well</span>
                         </li>
                         <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <Download size={16} color="#FF6B6B" />
-                            <span>Results maintain original quality while improving specific aspects</span>
+                            <span>Result will be saved as PNG with transparent background</span>
                         </li>
                     </ul>
                 </div>
@@ -340,4 +323,4 @@ const ImageEnhancer = () => {
     );
 };
 
-export default ImageEnhancer;
+export default BackgroundRemover;

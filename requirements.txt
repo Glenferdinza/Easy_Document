@@ -1,80 +1,40 @@
-# Core Django dependencies
-Django==5.0.8
+# Core Django and Web Framework
+Django==5.2.5
 djangorestframework==3.15.2
 django-cors-headers==4.4.0
 python-dotenv==1.0.1
 
-# Database drivers
-mysqlclient==2.2.4
+# Database drivers (SQLite default, MySQL optional)
+# mysqlclient==2.2.4  # Uncomment for MySQL
 
-# File processing
+# Essential File Processing
 Pillow==10.4.0
 PyPDF2==3.0.1
 pdf2image==1.17.0
 reportlab==4.2.2
-yt-dlp==2024.8.6
-
-# Image processing
-opencv-python==4.10.0.84
-numpy==1.26.4
-
-# Word processing
 python-docx==1.1.2
 docx2pdf==0.1.8
 
-# QR Code tools
+# Media and YouTube Processing
+yt-dlp==2024.8.6
+opencv-python==4.10.0.84
+numpy==1.26.4
+
+# QR Code Tools
 qrcode[pil]==7.4.2
 pyzbar==0.1.9
 
-# Audio processing
-SpeechRecognition==3.10.0
-pydub==0.25.1
-gTTS==2.4.0
-
-# Watermark and metadata tools
+# Watermark Tools
 ExifRead==3.0.0
 
-# Universal converter tools
-python-magic==0.4.27
-openpyxl==3.1.2
-pandas==2.1.4
+# Security Features
+cryptography==43.0.0
+pywin32==305.1
 
-# Template builder dependencies
-jinja2==3.1.2
-weasyprint==61.2
-
-# Batch organizer dependencies
-rarfile==4.1
-patool==1.12
-
-# Security center dependencies
-bcrypt==4.1.2
-pyopenssl==24.0.0
-
-# Document parser dependencies
-textract==1.6.5
-pdfplumber==0.10.3
-pytesseract==0.3.10
-
-# Visual designer dependencies
-reportlab==4.2.2
-svglib==1.5.1
-cairocffi==1.6.0
-
-# File comparison dependencies
-difflib2==0.1
-filecmp2==0.3
-
-# Production server
+# Production Server
 gunicorn==22.0.0
 whitenoise==6.7.0
 
-# Security
-cryptography==43.0.0
-
-# Additional utilities
+# Essential Utilities
 requests==2.32.3
-python-magic==0.4.27
-
-# Development tools
 setuptools==72.1.0

@@ -1,5 +1,6 @@
 import React from 'react';
-import { GitHubIcon, InstagramIcon, HeartIcon, ImageIcon, DocumentIcon, VideoIcon, SecurityIcon, MobileIcon, BoltIcon } from './Icons';
+import { GitHubIcon, InstagramIcon, HeartIcon, ImageIcon, DocumentIcon, VideoIcon, MobileIcon, BoltIcon } from './Icons';
+import { Shield } from 'lucide-react';
 import Logo from './Logo';
 
 const Footer = () => {
@@ -132,7 +133,7 @@ const Footer = () => {
                 YouTube to MP3/MP4 Conversion
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <SecurityIcon size={16} color="white" />
+                <Shield size={16} color="white" />
                 Secure & Private Processing
               </li>
               <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
