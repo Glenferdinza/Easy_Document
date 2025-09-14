@@ -330,7 +330,10 @@ const YouTubeConverter = () => {
                   name="format"
                   value="mp3"
                   checked={format === 'mp3'}
-                  onChange={(e) => setFormat(e.target.value)}
+                  onChange={(e) => {
+                    setFormat(e.target.value);
+                    setQuality('medium'); // Set default audio quality
+                  }}
                   style={{ accentColor: '#45b7d1' }}
                 />
                 <Music size={20} style={{ color: '#45b7d1' }} />
@@ -356,7 +359,10 @@ const YouTubeConverter = () => {
                   name="format"
                   value="mp4"
                   checked={format === 'mp4'}
-                  onChange={(e) => setFormat(e.target.value)}
+                  onChange={(e) => {
+                    setFormat(e.target.value);
+                    setQuality('720p'); // Set default video quality
+                  }}
                   style={{ accentColor: '#45b7d1' }}
                 />
                 <Video size={20} style={{ color: '#45b7d1' }} />
@@ -367,50 +373,79 @@ const YouTubeConverter = () => {
               </label>
             </div>
 
-            {/* Quality Selection (only for MP4) */}
-            {format === 'mp4' && (
-              <div style={{ marginBottom: '2rem' }}>
-                <h4 style={{
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  color: '#333',
-                  marginBottom: '1rem'
-                }}>
-                  Video Quality
-                </h4>
-                <div style={{
-                  display: 'flex',
-                  gap: '1rem',
-                  flexWrap: 'wrap'
-                }}>
-                  {[
-                    { value: '480p', label: '480p', desc: 'Standard quality' },
-                    { value: '720p', label: '720p', desc: 'HD quality' },
-                    { value: '1080p', label: '1080p', desc: 'Full HD' }
-                  ].map(q => (
-                    <button
-                      key={q.value}
-                      onClick={() => setQuality(q.value)}
-                      style={{
-                        padding: '0.75rem 1rem',
-                        background: quality === q.value ? '#45b7d1' : 'white',
-                        color: quality === q.value ? 'white' : '#45b7d1',
-                        border: `2px solid #45b7d1`,
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontWeight: '500',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      <div>{q.label}</div>
-                      <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
-                        {q.desc}
-                      </div>
-                    </button>
-                  ))}
-                </div>
+            {/* Quality Selection */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h4 style={{
+                fontSize: '1rem',
+                fontWeight: '600',
+                color: '#333',
+                marginBottom: '1rem'
+              }}>
+                {format === 'mp4' ? 'Video Quality' : 'Audio Quality'}
+              </h4>
+              <div style={{
+                display: 'flex',
+                gap: '1rem',
+                flexWrap: 'wrap'
+              }}>
+                {format === 'mp4' ? [
+                  { value: '360p', label: '360p', desc: 'Low quality, small size' },
+                  { value: '480p', label: '480p', desc: 'Standard quality' },
+                  { value: '720p', label: '720p', desc: 'HD quality (recommended)' },
+                  { value: '1080p', label: '1080p', desc: 'Full HD, larger size' },
+                  { value: '1440p', label: '1440p', desc: '2K quality' },
+                  { value: '2160p', label: '2160p', desc: '4K quality (if available)' }
+                ].map(q => (
+                  <button
+                    key={q.value}
+                    onClick={() => setQuality(q.value)}
+                    style={{
+                      padding: '0.75rem 1rem',
+                      background: quality === q.value ? '#45b7d1' : 'white',
+                      color: quality === q.value ? 'white' : '#45b7d1',
+                      border: `2px solid #45b7d1`,
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontWeight: '500',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'center',
+                      minWidth: '100px'
+                    }}
+                  >
+                    <div>{q.label}</div>
+                    <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
+                      {q.desc}
+                    </div>
+                  </button>
+                )) : [
+                  { value: 'low', label: '128 kbps', desc: 'Good quality' },
+                  { value: 'medium', label: '192 kbps', desc: 'High quality (recommended)' },
+                  { value: 'high', label: '320 kbps', desc: 'Best quality' }
+                ].map(q => (
+                  <button
+                    key={q.value}
+                    onClick={() => setQuality(q.value)}
+                    style={{
+                      padding: '0.75rem 1rem',
+                      background: quality === q.value ? '#45b7d1' : 'white',
+                      color: quality === q.value ? 'white' : '#45b7d1',
+                      border: `2px solid #45b7d1`,
+                      borderRadius: '6px',
+                      cursor: 'pointer',
+                      fontWeight: '500',
+                      transition: 'all 0.3s ease',
+                      textAlign: 'center',
+                      minWidth: '120px'
+                    }}
+                  >
+                    <div>{q.label}</div>
+                    <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>
+                      {q.desc}
+                    </div>
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
 
             {/* Convert Button */}
             <div style={{
@@ -550,19 +585,19 @@ const YouTubeConverter = () => {
           }}>
             <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Music size={16} color="#FF6B6B" />
-              <span><strong>MP3 format</strong> is perfect for music and audio content</span>
+              <span><strong>MP3 format</strong> perfect for music - choose 192kbps for best balance</span>
             </li>
             <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <VideoIcon size={16} color="#FF6B6B" />
-              <span><strong>MP4 format</strong> preserves video quality for movies and tutorials</span>
+              <span><strong>MP4 format</strong> supports up to 4K quality for videos</span>
             </li>
             <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Video size={16} color="#FF6B6B" />
-              <span><strong>Higher quality</strong> means larger file sizes</span>
+              <span><strong>720p HD</strong> recommended for most videos (good quality, reasonable size)</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <BoltIcon size={16} color="#FF6B6B" />
-              <span><strong>Processing time</strong> depends on video length and quality</span>
+              <span><strong>Fallback system</strong> ensures downloads work even without FFmpeg</span>
             </li>
           </ul>
         </div>

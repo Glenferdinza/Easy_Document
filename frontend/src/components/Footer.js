@@ -166,7 +166,7 @@ const Footer = () => {
           }}>
             <span>Made with</span>
             <HeartIcon size={16} fill="white" />
-            <span>by Asya's</span>
+            <span>by Glenferdinza's</span>
           </div>
           <div style={{
             opacity: 0.9,

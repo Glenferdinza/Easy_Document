@@ -1,6 +1,7 @@
 import os
 import time
 import tempfile
+from io import BytesIO
 from django.http import FileResponse, JsonResponse
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
@@ -8,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.conf import settings
 from .utils import (
     remove_background, enhance_image, is_image_format, 
-    save_image_with_quality, get_supported_formats
+    save_image_with_quality, get_supported_formats, apply_manual_edits
 )
 from .models import BackgroundRemovalHistory, ImageEnhancementHistory
 
@@ -93,9 +94,10 @@ class BackgroundRemoverView(View):
         """Get supported methods and formats"""
         return JsonResponse({
             'methods': [
-                {'value': 'auto', 'label': 'Automatic (Recommended)'},
+                {'value': 'auto', 'label': 'Automatic (Enhanced)'},
+                {'value': 'ai_enhanced', 'label': 'AI Enhanced (Best Quality)'},
                 {'value': 'grabcut', 'label': 'GrabCut Algorithm'},
-                {'value': 'threshold', 'label': 'Threshold Based'},
+                {'value': 'threshold', 'label': 'Smart Threshold'},
             ],
             'supported_formats': get_supported_formats(),
             'max_file_size': '50MB'
@@ -282,22 +284,48 @@ class BackgroundEditorView(View):
     def post(self, request):
         """Apply manual edits to background removal"""
         try:
-            if 'file' not in request.FILES:
-                return JsonResponse({'error': 'No file provided'}, status=400)
+            if 'image_data' not in request.POST:
+                return JsonResponse({'error': 'No image data provided'}, status=400)
             
-            uploaded_file = request.FILES['file']
+            import json
+            import base64
             
-            # Get editing parameters
+            # Get image data and editing parameters
+            image_data_b64 = request.POST.get('image_data')
             brush_size = int(request.POST.get('brush_size', 10))
             operation = request.POST.get('operation', 'erase')  # erase, restore
-            coordinates = request.POST.get('coordinates', '[]')  # JSON array of [x, y] points
+            coordinates_str = request.POST.get('coordinates', '[]')
             
-            # TODO: Implement manual editing functionality
-            # This would require more complex interaction with the frontend
-            # For now, return the original file
+            try:
+                coordinates = json.loads(coordinates_str)
+            except json.JSONDecodeError:
+                coordinates = []
+            
+            # Decode base64 image data
+            try:
+                image_data = base64.b64decode(image_data_b64.split(',')[1])
+            except (IndexError, ValueError):
+                return JsonResponse({'error': 'Invalid image data format'}, status=400)
+            
+            # Apply manual edits
+            from .utils import apply_manual_edits
+            edited_image = apply_manual_edits(
+                image_data, 
+                coordinates, 
+                brush_size, 
+                operation
+            )
+            
+            # Convert result to base64
+            output = BytesIO()
+            edited_image.save(output, format='PNG')
+            output.seek(0)
+            
+            result_b64 = base64.b64encode(output.getvalue()).decode('utf-8')
             
             return JsonResponse({
-                'message': 'Manual editing feature coming soon!',
+                'success': True,
+                'image': f'data:image/png;base64,{result_b64}',
                 'parameters': {
                     'brush_size': brush_size,
                     'operation': operation,

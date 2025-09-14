@@ -39,11 +39,19 @@
     "react-toastify": "^9.1.1",
     "recharts": "^3.1.2"
   },
+  "main": "public/electron.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-standalone": "electron public/electron-standalone.js",
+    "dist": "npm run build && electron-builder",
+    "dist-standalone": "npm run build && electron-builder --config.main=public/electron-standalone.js",
+    "pack": "npm run build && electron-builder --dir"
   },
   "eslintConfig": {
     "extends": [
@@ -64,9 +72,48 @@
     ]
   },
   "proxy": "http://localhost:8000",
+  "build": {
+    "appId": "com.glenferdinza.easydocument",
+    "productName": "Easy Document",
+    "directories": {
+      "buildResources": "public",
+      "output": "dist"
+    },
+    "files": [
+      "build/**/*",
+      "public/electron.js",
+      "public/preload.js",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/favicon.svg"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/favicon.svg"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/favicon.svg"
+    }
+  },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "concurrently": "^8.2.2",
+    "electron": "^38.1.0",
+    "electron-builder": "^26.0.12",
+    "electron-is-dev": "^3.0.1",
+    "find-process": "^2.0.0",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.13"
+    "tailwindcss": "^4.1.13",
+    "wait-on": "^8.0.5"
   }
 }

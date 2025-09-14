@@ -8,7 +8,7 @@ import { Shield } from 'lucide-react';
 
 const PDFCompress = () => {
   const [files, setFiles] = useState([]);
-  const [compressionLevel, setCompressionLevel] = useState('medium');
+  const [compressionLevel, setCompressionLevel] = useState('high');
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState({});
 
@@ -127,17 +127,12 @@ const PDFCompress = () => {
     {
       value: 'low',
       label: 'Low Compression',
-      description: 'Minimal compression, best quality'
-    },
-    {
-      value: 'medium',
-      label: 'Medium Compression',
-      description: 'Balanced compression and quality'
+      description: 'Gentle compression, preserves quality (~15% reduction)'
     },
     {
       value: 'high',
-      label: 'High Compression',
-      description: 'Maximum compression, smaller files'
+      label: 'High Compression', 
+      description: 'Aggressive compression, smaller files (~25% reduction)'
     }
   ];
 
@@ -485,7 +480,7 @@ const PDFCompress = () => {
             </li>
             <li style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Settings size={16} color="#FF6B6B" />
-              <span><strong>Medium compression</strong> offers the best balance for most documents</span>
+              <span><strong>High compression</strong> offers good size reduction for most documents</span>
             </li>
             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Shield size={16} color="#FF6B6B" />

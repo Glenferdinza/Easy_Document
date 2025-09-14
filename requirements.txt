@@ -1,40 +1,49 @@
-# Core Django and Web Framework
-Django==5.2.5
-djangorestframework==3.15.2
-django-cors-headers==4.4.0
-python-dotenv==1.0.1
+# Easy Document - Full Stack Document Processing Platform
+# Compatible with Python 3.9+ | Secure and optimized dependencies
 
-# Database drivers (SQLite default, MySQL optional)
-# mysqlclient==2.2.4  # Uncomment for MySQL
+# Core Django Framework - LTS versions for stability
+Django>=5.2.5,<6.0.0
+djangorestframework>=3.15.2,<4.0.0
+django-cors-headers>=4.4.0,<5.0.0
+python-dotenv>=1.0.1,<2.0.0
 
-# Essential File Processing
-Pillow==10.4.0
-PyPDF2==3.0.1
-pdf2image==1.17.0
-reportlab==4.2.2
-python-docx==1.1.2
-docx2pdf==0.1.8
+# Database Support
+# mysqlclient>=2.2.4,<3.0.0  # Uncomment for MySQL production
 
-# Media and YouTube Processing
-yt-dlp==2024.8.6
-opencv-python==4.10.0.84
-numpy==1.26.4
+# Document Processing - Core Features
+Pillow>=10.4.0,<11.0.0          # Image processing and optimization
+PyMuPDF>=1.26.4,<2.0.0          # Advanced PDF processing (optimized)
+PyPDF2>=3.0.1,<4.0.0            # PDF manipulation
+pdf2image>=1.17.0,<2.0.0        # PDF to image conversion
+reportlab>=4.2.2,<5.0.0         # PDF generation
+python-docx>=1.1.2,<2.0.0       # Word document processing
+docx2pdf>=0.1.8,<1.0.0          # Word to PDF conversion
 
-# QR Code Tools
-qrcode[pil]==7.4.2
-pyzbar==0.1.9
+# Media Processing - YouTube & Video
+yt-dlp>=2024.8.6,<2025.0.0      # YouTube downloader (actively maintained)
+opencv-python>=4.10.0.84,<5.0.0 # Computer vision and image processing
+numpy>=1.26.4,<2.0.0            # Numerical computing
 
-# Watermark Tools
-ExifRead==3.0.0
+# QR Code Generation & Scanning
+qrcode[pil]>=7.4.2,<8.0.0       # QR code generation with image support
+pyzbar>=0.1.9,<1.0.0            # QR code scanning
 
-# Security Features
-cryptography==43.0.0
-pywin32==305.1
+# Image Enhancement & Tools
+ExifRead>=3.0.0,<4.0.0          # Image metadata processing
 
-# Production Server
-gunicorn==22.0.0
-whitenoise==6.7.0
+# Security & Encryption
+cryptography>=43.0.0,<44.0.0    # Modern cryptography library
+pywin32>=305.1,<306.0; sys_platform == "win32"  # Windows-specific utilities
 
-# Essential Utilities
-requests==2.32.3
-setuptools==72.1.0
+# Production Web Server
+gunicorn>=22.0.0,<23.0.0        # WSGI HTTP server
+whitenoise>=6.7.0,<7.0.0        # Static file serving
+
+# HTTP & Utilities
+requests>=2.32.3,<3.0.0         # HTTP library
+setuptools>=72.1.0,<73.0.0      # Package management
+
+# Development & Testing (optional)
+# pytest>=8.0.0,<9.0.0          # Testing framework
+# black>=24.0.0,<25.0.0         # Code formatting
+# flake8>=7.0.0,<8.0.0          # Code linting

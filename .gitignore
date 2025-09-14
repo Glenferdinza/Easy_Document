@@ -19,19 +19,25 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Django
 *.log
 local_settings.py
 db.sqlite3
+db.sqlite3-journal
 media/
 staticfiles/
+static/
+collected_static/
 
 # Virtual Environment
 venv/
 env/
 ENV/
 .venv/
+.pyenv/
+pipenv/
 
 # Node.js
 node_modules/
@@ -48,24 +54,34 @@ yarn.lock
 /frontend/.env.test.local
 /frontend/.env.production.local
 
-# Environment Variables
+# Environment Variables and Secrets
 .env
-.env.production
-.env.local
-.env.test
-frontend/.env.local
-frontend/.env.production
+.env.*
+!.env.example
+.envrc
+*.env
+secret_key.txt
+secrets/
 
-# IDEs
+# IDEs and Editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.sublime-project
+*.sublime-workspace
+.atom/
 
-# OS
+# Operating System
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
 *.bak
 
 # Logs
@@ -83,25 +99,34 @@ temp/
 *.sqlite3
 *.db
 
-# FFmpeg binaries and dependencies (large files excluded from Git)
+# Large Binary Dependencies (exclude from Git)
 backend/ffmpeg/
 backend/ffmpeg_local_backup/
 backend/poppler/
-backend/ffmpeg.exe
-backend/ffmpeg.zip
 *.exe
 *.dll
+*.msi
+*.zip
+*.tar.gz
+*.7z
 
-# Deployment files (keep for examples)
-# *.ps1
-# *.sh
-# *.bat
+# External Dependencies
+node_modules/
+bower_components/
 
-# Test files
+# Development and Test Files
 test_*.py
 *_test.py
+*test*.py
 reset_*.py
 manual_*.py
+comprehensive_test.py
+final_test_*.py
+final_optimization_test.py
+playground/
+experiments/
+scratch/
+test_files/
 
 # Coverage reports
 htmlcov/
@@ -127,42 +152,79 @@ backend/word_tools/temp/
 backend/image_processing/temp/
 *.processed.*
 
-# User uploaded files (during development)
+# Application Data and Uploads
 uploads/
 downloads/
+user_data/
+processed_files/
+backend/media/user_uploads/
+backend/media/processed/
+backend/media/temp/
 
-# Runtime files
+# Runtime and Process Files
 *.sock
 *.pid
+celerybeat-schedule
+celerybeat.pid
+*.lock
 
-# Additional exclusions
+# Testing and Quality Tools
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tox/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
 
-# Security and sensitive files
+# Security and Certificates
 *.key
 *.pem
 *.crt
-secret_key.txt
+*.cer
+*.p12
+*.pfx
+certificates/
 
-# Additional temporary files
+# Backup and Archive Files
 *.backup
+*.bak
 *.orig
+*.save
+*.swp
+*.tmp
 nohup.out
 
-# Additional frontend files
+# Additional Frontend Specific
 /frontend/npm-debug.log
 /frontend/yarn-error.log
 /frontend/.pnp
 /frontend/.pnp.js
+/frontend/dist/
+/frontend/coverage/
 
-# System files
-desktop.ini
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
+# Temporary Processing Directories
+backend/word_tools/temp/
+backend/image_processing/temp/
+backend/compression/temp/
+backend/youtube_converter/temp/
+backend/security_center/temp/
+**/temp/
+**/tmp/
+
+# Documentation Generation
+docs/_build/
+site/
+
+# Profiling
+*.prof
+
+# Database Backups
+*.sql
+*.dump
+backup_*.db
 
 

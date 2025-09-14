@@ -1,47 +1,130 @@
 import qrcode
+from qrcode.constants import ERROR_CORRECT_L, ERROR_CORRECT_M, ERROR_CORRECT_Q, ERROR_CORRECT_H
 import tempfile
 import os
-from PIL import Image
+from PIL import Image, ImageFilter
 from pyzbar import pyzbar
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-def generate_qr_code(content, size=200, error_correction='M', output_format='PNG'):
-    """Generate QR code from content"""
+def generate_qr_code(content, size=200, error_correction='M', output_format='PNG', 
+                    fill_color="black", back_color="white", logo_path=None):
+    """Enhanced QR code generation with customization options"""
     try:
+        # Validate input
+        if not content or not content.strip():
+            raise ValueError("Content cannot be empty")
+        
         # Set error correction level
         error_levels = {
-            'L': qrcode.constants.ERROR_CORRECT_L,
-            'M': qrcode.constants.ERROR_CORRECT_M,
-            'Q': qrcode.constants.ERROR_CORRECT_Q,
-            'H': qrcode.constants.ERROR_CORRECT_H,
+            'L': ERROR_CORRECT_L,  # ~7% error recovery
+            'M': ERROR_CORRECT_M,  # ~15% error recovery  
+            'Q': ERROR_CORRECT_Q,  # ~25% error recovery
+            'H': ERROR_CORRECT_H,  # ~30% error recovery
         }
         
+        # Validate size
+        size = max(100, min(size, 2000))  # Clamp between 100-2000px
+        
+        # Calculate optimal box size and border
+        if size <= 200:
+            box_size = 8
+            border = 2
+        elif size <= 500:
+            box_size = 10
+            border = 4
+        else:
+            box_size = 12
+            border = 6
+        
+        # Create QR code with optimal settings
         qr = qrcode.QRCode(
-            version=1,
-            error_correction=error_levels.get(error_correction, qrcode.constants.ERROR_CORRECT_M),
-            box_size=10,
-            border=4,
+            version=1,  # Auto-determine version
+            error_correction=error_levels.get(error_correction, ERROR_CORRECT_M),
+            box_size=box_size,
+            border=border,
         )
         
         qr.add_data(content)
         qr.make(fit=True)
         
-        # Create QR code image
-        img = qr.make_image(fill_color="black", back_color="white")
+        # Create QR code image with custom colors
+        qr_img = qr.make_image(fill_color=fill_color, back_color=back_color)
         
-        # Resize if needed
-        if size != 200:
+        # Convert to PIL Image for processing
+        img = qr_img.get_image() if hasattr(qr_img, 'get_image') else qr_img
+        
+        # Ensure it's a PIL Image and convert to RGB if needed
+        if not isinstance(img, Image.Image):
+            # Convert from qrcode image to PIL Image
+            import io
+            buffer = io.BytesIO()
+            qr_img.save(buffer)
+            buffer.seek(0)
+            img = Image.open(buffer)
+        
+        # Convert to RGB if needed (for logo embedding)
+        if hasattr(img, 'mode') and img.mode != 'RGB':
+            img = img.convert('RGB')
+        
+        # Add logo if provided
+        if logo_path and os.path.exists(logo_path):
+            try:
+                logo = Image.open(logo_path)
+                
+                # Calculate logo size (10% of QR code size)
+                logo_size = size // 10
+                logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
+                
+                # Create a white background for logo
+                logo_bg = Image.new('RGB', (logo_size + 10, logo_size + 10), 'white')
+                logo_bg.paste(logo, (5, 5))
+                
+                # Calculate position (center)
+                pos = ((img.size[0] - logo_bg.size[0]) // 2,
+                       (img.size[1] - logo_bg.size[1]) // 2)
+                
+                img.paste(logo_bg, pos)
+            except Exception as logo_error:
+                logger.warning(f"Logo embedding failed: {logo_error}")
+        
+        # Resize to exact size if needed
+        if img.size[0] != size:
             img = img.resize((size, size), Image.Resampling.LANCZOS)
+        
+        # Apply image enhancements for better quality
+        if size > 400:
+            # Sharpen for larger images
+            from PIL import ImageFilter
+            img = img.filter(ImageFilter.UnsharpMask(radius=1, percent=150, threshold=3))
+        
+        # Optimize for different formats
+        save_kwargs = {}
+        if output_format.upper() == 'PNG':
+            save_kwargs = {'optimize': True, 'compress_level': 6}
+        elif output_format.upper() in ['JPEG', 'JPG']:
+            save_kwargs = {'quality': 95, 'optimize': True}
+            # Convert to RGB for JPEG
+            if img.mode == 'RGBA':
+                background = Image.new('RGB', img.size, back_color)
+                background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
+                img = background
+        elif output_format.upper() == 'WEBP':
+            save_kwargs = {'quality': 90, 'optimize': True}
         
         # Save to temporary file
         output_dir = tempfile.mkdtemp()
         output_filename = f"qr_code.{output_format.lower()}"
         output_path = os.path.join(output_dir, output_filename)
         
-        img.save(output_path, format=output_format)
+        img.save(output_path, format=output_format.upper(), **save_kwargs)
+        
+        # Validate output
+        if not os.path.exists(output_path) or os.path.getsize(output_path) == 0:
+            raise Exception("Failed to create QR code file")
+        
         return output_path
         
     except Exception as e:
@@ -99,15 +182,18 @@ END:VCARD"""
 
 
 def batch_generate_qr(content_list, size=200):
-    """Generate multiple QR codes"""
+    """Generate multiple QR codes with enhanced optimization"""
     try:
         output_dir = tempfile.mkdtemp()
         generated_files = []
         
         for i, content in enumerate(content_list):
+            if not content or not content.strip():
+                continue  # Skip empty content
+                
             qr = qrcode.QRCode(
                 version=1,
-                error_correction=qrcode.constants.ERROR_CORRECT_M,
+                error_correction=ERROR_CORRECT_M,
                 box_size=10,
                 border=4,
             )
@@ -115,13 +201,28 @@ def batch_generate_qr(content_list, size=200):
             qr.add_data(content)
             qr.make(fit=True)
             
-            img = qr.make_image(fill_color="black", back_color="white")
-            if size != 200:
+            qr_img = qr.make_image(fill_color="black", back_color="white")
+            
+            # Convert to PIL Image for processing
+            img = qr_img.get_image() if hasattr(qr_img, 'get_image') else qr_img
+            
+            if not isinstance(img, Image.Image):
+                # Convert from qrcode image to PIL Image
+                import io
+                buffer = io.BytesIO()
+                qr_img.save(buffer)
+                buffer.seek(0)
+                img = Image.open(buffer)
+            
+            # Resize if needed
+            if hasattr(img, 'size') and size != 200:
                 img = img.resize((size, size), Image.Resampling.LANCZOS)
             
             filename = f"qr_code_{i+1}.png"
             filepath = os.path.join(output_dir, filename)
-            img.save(filepath)
+            
+            # Save with optimization
+            img.save(filepath, 'PNG', optimize=True)
             
             generated_files.append({
                 'filename': filename,

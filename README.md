@@ -8,42 +8,48 @@
 
 ## Description
 
-Easy Document is a comprehensive full-stack document processing platform built with Django (Backend) and React (Frontend). The platform provides professional document processing tools with a modern, responsive interface and fully functional APIs. It offers various document manipulation features including PDF processing, image compression, Word document conversion, QR code generation, watermarking, YouTube media conversion, and document security features.
+Easy Document is a comprehensive full-stack document processing platform built with Django (Backend) and React (Frontend). The platform provides professional document processing tools with a modern, responsive interface and secure APIs. It offers document manipulation features including PDF processing, image compression, Word document conversion, QR code generation, watermarking, YouTube media conversion, and advanced document security features with encryption and access controls.
 
 ## Features
 
 ### Document Processing
-- **PDF Compression**: Smart compression with quality control (up to 70% size reduction)
+- **PDF Compression**: 2-level compression system (High: 25% reduction, Low: 15% reduction)
 - **PDF Merge**: Combine multiple PDFs seamlessly with drag-and-drop ordering
 - **PDF Split**: Split multi-page PDFs into separate files
 - **Word to PDF**: Document conversion with preserved formatting
 - **Word Document Merger**: Merge multiple Word documents to PDF/DOCX format
 
 ### Image Processing  
-- **Image Compression**: Batch compression with quality preview (up to 60% reduction)
-- **Background Removal**: AI-powered background remover
+- **Image Compression**: Batch compression with quality preview and size reduction
+- **Background Removal**: AI-powered background removal with transparency support
 - **Image Enhancement**: 6 enhancement types (sharpen, denoise, upscale, color enhance, brightness, contrast)
 - **Image to PDF**: Convert multiple images to single PDF document
 - **Format Conversion**: Multi-format support (JPG, PNG, WebP)
 
-### Professional Tools
+### Media & Professional Tools
+- **YouTube Converter**: Video/audio download with quality selection (MP3: 128/192/320 kbps, MP4: 360p-4K)
 - **QR Code Generator**: Text, URL, contact QR codes with built-in scanner
 - **Watermark Tools**: Text and image watermarks with 9 positioning options
-- **YouTube Converter**: Video/audio download and conversion (MP4/MP3)
-- **Security Center**: Document encryption and password protection
+
+### Security Features
+- **Password Protection**: Multi-level document access control with expiration and usage limits
+- **AES-256 Encryption**: Military-grade file encryption with integrity verification
+- **Digital Watermarking**: Transparent watermark protection for document authenticity
+- **Access Logging**: Complete audit trail for security monitoring and compliance
+- **File Validation**: Comprehensive input sanitization and file type verification
 
 ## Technology Stack
 
 ### Backend
-- **Framework**: Django 5.2.5
-- **API**: Django REST Framework 3.15.2
-- **Database**: SQLite (default), MySQL (optional)
-- **Image Processing**: Pillow 10.4.0, OpenCV 4.10.0.84
+- **Framework**: Django 5.2.5 with Django REST Framework 3.15.2
+- **Database**: SQLite (development), MySQL (production ready)
+- **Image Processing**: Pillow 10.4.0, OpenCV 4.10.0.84, PyMuPDF 1.26.4
 - **Document Processing**: PyPDF2 3.0.1, python-docx 1.1.2, docx2pdf 0.1.8
-- **Media Processing**: yt-dlp 2024.8.6
+- **Media Processing**: yt-dlp 2024.8.6 with FFmpeg integration
 - **QR Code**: qrcode[pil] 7.4.2, pyzbar 0.1.9
-- **Security**: cryptography 43.0.0, pywin32 305.1
-- **Server**: Gunicorn 22.0.0, Whitenoise 6.7.0
+- **Security**: cryptography 43.0.0, pywin32 305.1, bcrypt hashing
+- **Server**: Gunicorn 22.0.0, Whitenoise 6.7.0 for static files
+- **API Security**: CORS headers, CSRF protection, rate limiting (100 req/hour)
 
 ### Frontend
 - **Framework**: React 18.2.0
@@ -58,11 +64,11 @@ Easy Document is a comprehensive full-stack document processing platform built w
 ## Installation
 
 ### Prerequisites
-- Python 3.9 or higher
-- Node.js 16 or higher
-- Git
+- **Python 3.9+** (3.11 recommended for best performance)
+- **Node.js 16+** (18 LTS recommended)
+- **Git** for version control
 
-### Steps
+### Quick Start
 
 1. **Clone Repository**
 ```bash
@@ -70,20 +76,48 @@ git clone https://github.com/Glenferdinza/Easy_Document.git
 cd Easy_Document
 ```
 
-2. **Backend Setup**
+2. **Backend Setup (Recommended: Virtual Environment)**
 ```bash
 # Navigate to backend directory
 cd backend
 
+# Create virtual environment (HIGHLY RECOMMENDED)
+python -m venv venv
+
+# Activate virtual environment
+# Windows PowerShell/CMD:
+venv\Scripts\activate
+# Windows Git Bash:
+source venv/Scripts/activate
+# Linux/Mac:
+source venv/bin/activate
+
+# Upgrade pip to latest version
+python -m pip install --upgrade pip
+
 # Install Python dependencies
 pip install -r requirements.txt
+
+# Set up environment variables (recommended for production)
+copy .env.example .env     # Windows
+# cp .env.example .env     # Linux/Mac
+# Edit .env file with your settings
 
 # Run database migrations
 python manage.py migrate
 
+# Create superuser (optional - for admin panel access)
+python manage.py createsuperuser
+
 # Start Django development server
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 127.0.0.1:8000
 ```
+
+**Why use Virtual Environment?**
+- Isolates project dependencies from system Python
+- Prevents version conflicts between projects
+- Ensures consistent deployment environments
+- Makes dependency management cleaner and more secure
 
 3. **Frontend Setup**
 ```bash
@@ -93,14 +127,114 @@ cd frontend
 # Install Node.js dependencies
 npm install
 
-# Start React development server
+# For Web Application (Development)
 npm start
+
+# For Desktop Application (Standalone)
+npm run electron-standalone
 ```
 
 4. **Access Application**
-- Frontend: http://localhost:3000
+
+**Web Version:**
+- Frontend Application: http://localhost:3000
 - Backend API: http://localhost:8000/api/
-- Django Admin: http://localhost:8000/admin/
+- Django Admin Panel: http://localhost:8000/admin/
+
+**Desktop Version:**
+- Runs as standalone Electron app
+- No browser required
+- Portable and offline-capable for file processing
+
+### Running Commands
+
+#### Development Mode (Web Application)
+```bash
+# Terminal 1: Backend server (keep virtual environment activated)
+cd backend
+venv\Scripts\activate  # Windows
+python manage.py runserver 127.0.0.1:8000
+
+# Terminal 2: Frontend server
+cd frontend
+npm start
+```
+
+#### Desktop Application Mode
+```bash
+# Terminal 1: Backend server (required for processing)
+cd backend
+venv\Scripts\activate  # Windows
+python manage.py runserver 127.0.0.1:8000
+
+# Terminal 2: Desktop app
+cd frontend
+npm run electron-standalone
+```
+
+#### Production Deployment
+
+**Web Application:**
+```bash
+# Backend with Gunicorn (recommended)
+cd backend
+venv\Scripts\activate  # Windows
+pip install gunicorn
+gunicorn compress_website.wsgi:application --bind 0.0.0.0:8000 --workers 4
+
+# Frontend production build
+cd frontend
+npm run build
+# Deploy build/ folder to your web server (nginx, apache, etc.)
+```
+
+**Desktop Application:**
+```bash
+# Build desktop executable
+cd frontend
+npm run build
+npm run dist  # Creates installer in dist/ folder
+
+# Or create portable version
+npm run pack  # Creates unpacked app in dist/ folder
+```
+
+## Desktop Application
+
+Easy Document can run as both a web application and a standalone desktop application using Electron.
+
+### Quick Desktop Setup (Windows)
+```batch
+# One-command setup and launch
+start-desktop-app.bat
+```
+
+### Quick Desktop Setup (Linux/Mac)
+```bash
+# Make scripts executable and run
+chmod +x *.sh
+./start-desktop-app.sh
+```
+
+### Manual Desktop Setup
+```bash
+# 1. Run setup script
+setup-desktop.bat    # Windows
+./setup-desktop.sh   # Linux/Mac
+
+# 2. Start backend (Terminal 1)
+run-backend.bat      # Windows
+./run-backend.sh     # Linux/Mac
+
+# 3. Start desktop app (Terminal 2)
+run-desktop.bat      # Windows
+./run-desktop.sh     # Linux/Mac
+```
+
+### Desktop vs Web Features
+- **Desktop**: Standalone app, no browser needed, offline file processing
+- **Web**: Browser-based, easier deployment, better for shared environments
+- **Both**: Same features, same security, same performance
 
 ## Project Structure
 
@@ -119,16 +253,21 @@ Easy_Document/
 │   ├── manage.py              # Django management script
 │   └── requirements.txt       # Python dependencies
 ├── frontend/                  # React frontend application
-│   ├── public/               # Static assets and index.html
+│   ├── public/               # Static assets and Electron configuration
 │   ├── src/
 │   │   ├── components/       # Reusable React components
 │   │   ├── pages/           # Page components
 │   │   ├── styles/          # CSS stylesheets
 │   │   ├── utils/           # API utilities and helpers
 │   │   └── App.js           # Main React component
-│   ├── package.json         # Node.js dependencies
+│   ├── package.json         # Node.js dependencies and Electron config
 │   └── build/               # Production build output
+├── setup-desktop.*           # Desktop app setup scripts
+├── run-backend.*             # Backend server scripts
+├── run-desktop.*             # Desktop app launch scripts
+├── start-desktop-app.*       # All-in-one launcher scripts
 ├── .gitignore               # Git ignore rules
+├── CONTRIBUTING.md          # Contribution guidelines
 └── README.md               # Project documentation
 ```
 
@@ -136,54 +275,163 @@ Easy_Document/
 
 ### Document Processing Endpoints
 ```
-POST /api/compress/pdf/              # PDF compression
-POST /api/compress/image/            # Image compression
-POST /api/pdf-tools/merge/           # PDF merge
-POST /api/pdf-tools/split/           # PDF split
-POST /api/word-tools/convert-to-pdf/ # Word to PDF conversion
-POST /api/word-tools/merge-documents/ # Word document merging
+POST /api/compress/pdf/                    # PDF compression (2-level system)
+POST /api/compress/image/                  # Image compression with preview
+POST /api/pdf-tools/merge/                 # PDF merge with drag-drop order
+POST /api/pdf-tools/split/                 # PDF split into separate files
+POST /api/word-tools/convert-to-pdf/       # Word to PDF conversion
+POST /api/word-tools/merge-documents/      # Word document merging
 ```
 
 ### Image Processing Endpoints
 ```
-POST /api/image-processing/remove-background/ # Background removal
-POST /api/image-processing/enhance/           # Image enhancement
-POST /api/image-tools/to-pdf/                 # Image to PDF conversion
+POST /api/image-processing/remove-background/  # AI-powered background removal
+POST /api/image-processing/enhance/            # 6-type image enhancement
+POST /api/image-tools/to-pdf/                  # Multi-image to PDF conversion
 ```
 
-### Professional Tools Endpoints
+### Media & Professional Tools
 ```
-POST /api/qr-tools/generate/text/      # QR code generation
-POST /api/qr-tools/read/               # QR code scanning
-POST /api/watermark/apply/             # Watermark application
-POST /api/youtube/convert/             # YouTube media conversion
-POST /api/security/password-protect/   # Document password protection
-```
-
-## Deployment
-
-### Production Setup
-```bash
-# Backend deployment with Gunicorn
-pip install gunicorn
-gunicorn compress_website.wsgi:application --bind 0.0.0.0:8000
-
-# Frontend production build
-npm run build
+POST /api/youtube/convert/                     # YouTube video/audio conversion
+POST /api/qr-tools/generate/text/              # QR code generation (text/URL/contact)
+POST /api/qr-tools/read/                       # QR code scanning
+POST /api/watermark/apply/                     # Watermark application (9 positions)
 ```
 
-### Environment Configuration
-Create `.env` file in backend directory:
+### Security Center Endpoints
+```
+POST /api/security/password-protect/          # Password protection with access controls
+POST /api/security/encrypt/                   # AES-256 file encryption
+POST /api/security/decrypt/                   # File decryption with integrity check
+POST /api/security/watermark/                 # Digital watermarking
+GET  /api/security/policies/                  # Available security policies
+GET  /api/security/logs/                      # Access logs and audit trail
+```
+
+### Authentication & Rate Limiting
+- Anonymous users: 100 requests per hour
+- CSRF protection enabled for all POST requests
+- CORS configured for cross-origin requests
+- File size limits: 50MB per upload
+
+## Configuration
+
+### Environment Variables
+Create `.env` file in backend directory for production:
 ```env
+# Security Settings
 DEBUG=False
-SECRET_KEY=your-secret-key-here
-ALLOWED_HOSTS=your-domain.com,localhost
-DATABASE_URL=sqlite:///db.sqlite3
+SECRET_KEY=your-production-secret-key-minimum-50-characters-long
+ALLOWED_HOSTS=your-domain.com,www.your-domain.com,localhost
+
+# Database Configuration (MySQL example)
+DB_NAME=easy_document
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_HOST=localhost
+DB_PORT=3306
+
+# CORS Settings
+CORS_ALLOWED_ORIGINS=https://your-domain.com,https://www.your-domain.com
+
+# API Rate Limiting
+THROTTLE_ANON_RATE=100/hour
+THROTTLE_USER_RATE=1000/hour
 ```
+
+### Security Configuration
+The application includes comprehensive security features:
+- CSRF protection with trusted origins
+- CORS headers for cross-origin requests
+- Rate limiting for API endpoints
+- File validation and size limits
+- Input sanitization and error handling
+- Secure headers (HSTS, XSS protection, content type sniffing)
+- Password hashing with bcrypt
+- AES-256 encryption for sensitive documents
+
+### Deployment Options
+
+#### Traditional Server Deployment
+```bash
+# Backend with Gunicorn
+cd backend
+pip install gunicorn
+gunicorn compress_website.wsgi:application --bind 0.0.0.0:8000 --workers 4
+
+# Frontend served by web server (nginx/apache)
+cd frontend
+npm run build
+# Copy build/ contents to web server document root
+```
+
+#### Docker Deployment
+```bash
+# Build and run containers
+docker-compose up -d
+
+# Or individually
+docker build -t easy-document-backend ./backend
+docker build -t easy-document-frontend ./frontend
+```
+
+## Troubleshooting
+
+### Desktop Application Issues
+
+**Problem: `npm run electron-standalone` shows Autofill errors**
+```
+Solution: These errors are cosmetic and can be ignored. The application works normally.
+Error messages like "Autofill.enable wasn't found" do not affect functionality.
+```
+
+**Problem: Desktop app won't start**
+```bash
+# 1. Check if all dependencies are installed
+cd frontend
+npm install
+
+# 2. Ensure backend is set up
+cd backend
+venv\Scripts\activate  # Windows
+pip install -r requirements.txt
+
+# 3. Try manual start
+cd frontend
+npx electron public/electron-standalone.js
+```
+
+**Problem: Backend server not starting**
+```bash
+# Check Python installation
+python --version  # Should be 3.9+
+
+# Check if virtual environment is activated
+# Windows
+venv\Scripts\activate
+
+# Install/reinstall requirements
+pip install -r requirements.txt
+
+# Try running server manually
+python manage.py runserver 127.0.0.1:8000
+```
+
+**Problem: Port conflicts**
+```
+The electron app automatically finds available ports.
+If you need to use specific ports, check the electron-standalone.js configuration.
+```
+
+### Common Solutions
+- **Virtual Environment**: Always use virtual environment for Python dependencies
+- **Node Modules**: Delete `node_modules` and run `npm install` if packages are corrupted
+- **Port Issues**: Close other applications using ports 8000-8010
+- **Path Issues**: Ensure you're running commands from correct directories
 
 ## Developer
 
-**Glen Ferdinand**
+**Glenferdinza**
 - GitHub: [@Glenferdinza](https://github.com/Glenferdinza)
 - Email: glenferdinza@github.com
 
